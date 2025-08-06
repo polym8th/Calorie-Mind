@@ -1,20 +1,21 @@
-# Use latest Node 22 image
-FROM node:22
-
-# Install Python and build tools
-RUN apt-get update && apt-get install -y python3 make g++
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy all files
+# Copy project files
 COPY . .
 
-# Install dependencies
-RUN npm install
+# Install Python dependencies
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Expose port (change this if your app runs on a different one)
-EXPOSE 3000
+# Set environment variables for Flask
+ENV FLASK_APP=main.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=5000
 
-# Start app
-CMD ["npm", "start"]
+# Expose port
+EXPOSE 5000
+
+# Run the app
+CMD ["flask", "run"]
