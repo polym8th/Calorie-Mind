@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Daily Goal Achievement</h2>
+<ul class="list-group">
+    <li class="list-group-item">Protein: {{ percentages.protein }}%</li>
+    <li class="list-group-item">Fat: {{ percentages.fat }}%</li>
+    <li class="list-group-item">Carbs: {{ percentages.carbs }}%</li>
+</ul>
+{% endblock %}

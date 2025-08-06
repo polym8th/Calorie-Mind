@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Log a Meal</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Food Name</label>
+        <input type="text" name="food_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Use API to fetch nutrition?</label>
+        <select name="use_api" class="form-select">
+            <option value="no">Yes</option>
+            <option value="yes">No (Enter manually)</option>
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Calories</label>
+            <input type="number" name="calories" class="form-control">
+        </div>
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Protein (g)</label>
+            <input type="number" name="protein" class="form-control">
+        </div>
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Fat (g)</label>
+            <input type="number" name="fat" class="form-control">
+        </div>
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Carbs (g)</label>
+            <input type="number" name="carbs" class="form-control">
+        </div>
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

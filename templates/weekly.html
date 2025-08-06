@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Weekly Totals</h2>
+<ul class="list-group">
+    <li class="list-group-item">Calories: {{ totals.calories }}</li>
+    <li class="list-group-item">Protein: {{ totals.protein }}g</li>
+    <li class="list-group-item">Fat: {{ totals.fat }}g</li>
+    <li class="list-group-item">Carbs: {{ totals.carbs }}g</li>
+</ul>
+{% endblock %}

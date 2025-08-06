@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Logged Entries</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Fat</th>
+            <th>Carbs</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.Timestamp }}</td>
+            <td>{{ entry.Food }}</td>
+            <td>{{ entry.Calories }}</td>
+            <td>{{ entry.Protein }}</td>
+            <td>{{ entry.Fat }}</td>
+            <td>{{ entry.Carbs }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('delete', row_num=entry.row_num) }}" onsubmit="return confirm('Delete this entry?');">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
