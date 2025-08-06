@@ -1,21 +1,20 @@
-# Base image with Node.js and Linux tools
-FROM node:18
+# Use latest Node 22 image
+FROM node:22
 
 # Install Python and build tools
-RUN apt-get update && apt-get install -y python3 make g++ \
-    && npm install -g npm@latest
+RUN apt-get update && apt-get install -y python3 make g++
 
 # Set working directory
 WORKDIR /app
 
-# Copy app files
+# Copy all files
 COPY . .
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
-# Expose your app's port
+# Expose port (change this if your app runs on a different one)
 EXPOSE 3000
 
-# Start the app
+# Start app
 CMD ["npm", "start"]
