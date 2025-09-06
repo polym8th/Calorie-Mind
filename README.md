@@ -72,7 +72,7 @@ The application will be available at `http://localhost:5000`
 
 4. **Set environment variables:**
    ```bash
-   railway variables set SECRET_KEY=your_super_secret_key_here
+   railway variables set SECRET_KEY=aafc60326f192feacf0bf5406fdb1ba27d3a4163acd58e9cb68d078fceebe01c
    railway variables set FLASK_ENV=production
    ```
 
@@ -80,6 +80,8 @@ The application will be available at `http://localhost:5000`
    ```bash
    railway up
    ```
+
+**Note:** Railway will automatically detect this as a Python project using the `nixpacks.toml` configuration.
 
 ### Alternative: Deploy via Railway Dashboard
 
