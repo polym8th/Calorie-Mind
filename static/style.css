@@ -1,0 +1,53 @@
+/* Custom styles for Calorie Mind */
+
+/* Success card header - lime green */
+.success-header {
+    background-color: rgb(154, 212, 61) !important;
+    color: white !important;
+}
+
+/* Progress card header - hot pink */
+.progress-header {
+    background-color: #FF1493 !important;
+    color: white !important;
+}
+
+/* Smooth animations for result cards */
+.result-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-in;
+}
+
+.result-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom button hover effects */
+.btn-custom {
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Nutrition value styling */
+.nutrition-value {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Card border styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Form styling */
+.form-control:focus {
+    border-color: #FF1493;
+    box-shadow: 0 0 0 0.2rem rgba(255, 20, 147, 0.25);
+}

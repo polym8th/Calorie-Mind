@@ -1,6 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
 <h2>Log a Meal</h2>
+
+<!-- Daily Progress Summary -->
+{% if daily_totals.calories > 0 %}
+<div class="mb-4">
+    <div class="card border-info">
+        <div class="card-header progress-header">
+            <h6 class="mb-0">📊 Today's Progress</h6>
+        </div>
+        <div class="card-body py-2">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <small class="text-muted">Calories</small>
+                    <div class="fw-bold text-primary">{{ daily_totals.calories }}</div>
+                </div>
+                <div class="col-md-3">
+                    <small class="text-muted">Protein</small>
+                    <div class="fw-bold text-success">{{ daily_totals.protein }}g</div>
+                </div>
+                <div class="col-md-3">
+                    <small class="text-muted">Fat</small>
+                    <div class="fw-bold text-warning">{{ daily_totals.fat }}g</div>
+                </div>
+                <div class="col-md-3">
+                    <small class="text-muted">Carbs</small>
+                    <div class="fw-bold text-info">{{ daily_totals.carbs }}g</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 <form method="POST">
     <div class="mb-3">
         <label class="form-label">Food Name</label>
@@ -33,4 +64,91 @@
     </div>
     <button class="btn btn-primary">Submit</button>
 </form>
+
+<!-- Results Display -->
+{% if added_food %}
+<div class="mt-4">
+    <div class="card border-success">
+        <div class="card-header success-header">
+            <h5 class="mb-0">Meal Added Successfully!</h5>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">{{ added_food.name }}</h6>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4 class="text-primary">{{ added_food.calories }}</h4>
+                        <small class="text-muted">Calories</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4 class="text-success">{{ added_food.protein }}g</h4>
+                        <small class="text-muted">Protein</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4 class="text-warning">{{ added_food.fat }}g</h4>
+                        <small class="text-muted">Fat</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4 class="text-info">{{ added_food.carbs }}g</h4>
+                        <small class="text-muted">Carbs</small>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <a href="/review" class="btn btn-outline-primary btn-sm">View Progress</a>
+                <a href="/weekly" class="btn btn-outline-secondary btn-sm">Weekly Totals</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Clear form after successful submission
+{% if added_food %}
+document.addEventListener('DOMContentLoaded', function() {
+    // Clear the form
+    document.querySelector('form').reset();
+    
+    // Scroll to results
+    document.querySelector('.card').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+    
+    // Add a subtle animation to the results card
+    const resultCard = document.querySelector('.card');
+    resultCard.classList.add('result-card');
+    
+    setTimeout(() => {
+        resultCard.classList.add('show');
+    }, 100);
+});
+{% endif %}
+
+// Toggle manual input fields based on API selection
+document.addEventListener('DOMContentLoaded', function() {
+    const apiSelect = document.querySelector('select[name="use_api"]');
+    const manualInputs = document.querySelectorAll('input[name="calories"], input[name="protein"], input[name="fat"], input[name="carbs"]');
+    
+    function toggleManualInputs() {
+        const isManual = apiSelect.value === 'yes';
+        manualInputs.forEach(input => {
+            input.disabled = !isManual;
+            input.required = isManual;
+        });
+    }
+    
+    apiSelect.addEventListener('change', toggleManualInputs);
+    toggleManualInputs(); // Initial call
+});
+</script>
 {% endblock %}

@@ -46,10 +46,49 @@ This application uses Google Sheets to store calorie tracking data. You need to 
 
 ### 3. Run the Application
 ```bash
-python manage.py runserver
+python manage.py
 ```
 
 The application will be available at `http://localhost:5000`
+
+## Railway Deployment
+
+### Deploy to Railway
+
+1. **Install Railway CLI:**
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+2. **Login to Railway:**
+   ```bash
+   railway login
+   ```
+
+3. **Initialize Railway project:**
+   ```bash
+   railway init
+   ```
+
+4. **Set environment variables:**
+   ```bash
+   railway variables set SECRET_KEY=your_super_secret_key_here
+   railway variables set FLASK_ENV=production
+   ```
+
+5. **Deploy:**
+   ```bash
+   railway up
+   ```
+
+### Alternative: Deploy via Railway Dashboard
+
+1. Go to [Railway.app](https://railway.app)
+2. Connect your GitHub repository
+3. Set environment variables in Railway dashboard:
+   - `SECRET_KEY`: Your Flask secret key
+   - `FLASK_ENV`: `production`
+4. Deploy automatically on git push
 
 ## Features
 

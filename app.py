@@ -1,8 +1,13 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash
-from tracker import FoodTracker
+from tracker import FoodTracker, Food
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for flashing messages
+app.secret_key = os.environ.get('SECRET_KEY')  # Loads from .env file
 
 tracker = FoodTracker()
 
@@ -12,6 +17,7 @@ def home():
 
 @app.route('/log', methods=['GET', 'POST'])
 def log():
+    added_food = None
     if request.method == 'POST':
         food_name = request.form['food_name']
         use_api = request.form.get('use_api') == 'no'
@@ -20,20 +26,39 @@ def log():
             food = tracker.fetch_nutrition(food_name)
             if food:
                 tracker.add_food(food)
+                added_food = food
                 flash("Entry added using API!", "success")
+            else:
+                flash("Could not fetch nutrition data for this food item.", "warning")
         else:
             try:
                 calories = int(request.form['calories'])
                 protein = int(request.form['protein'])
                 fat = int(request.form['fat'])
                 carbs = int(request.form['carbs'])
-                tracker.add_food_manual(food_name, calories, protein, fat, carbs)
+                food = Food(food_name, calories, protein, fat, carbs)
+                tracker.add_food(food)
+                added_food = food
                 flash("Manual entry added!", "success")
             except ValueError:
                 flash("Invalid input values", "danger")
 
-        return redirect(url_for('log'))
-    return render_template('log.html')
+        # Don't redirect, stay on the same page to show results
+        daily_totals = {
+            'calories': sum(f.calories for f in tracker.today),
+            'protein': sum(f.protein for f in tracker.today),
+            'fat': sum(f.fat for f in tracker.today),
+            'carbs': sum(f.carbs for f in tracker.today)
+        }
+        return render_template('log.html', added_food=added_food, daily_totals=daily_totals)
+    
+    daily_totals = {
+        'calories': sum(f.calories for f in tracker.today),
+        'protein': sum(f.protein for f in tracker.today),
+        'fat': sum(f.fat for f in tracker.today),
+        'carbs': sum(f.carbs for f in tracker.today)
+    }
+    return render_template('log.html', added_food=added_food, daily_totals=daily_totals)
 
 @app.route('/goals', methods=['GET', 'POST'])
 def goals():
