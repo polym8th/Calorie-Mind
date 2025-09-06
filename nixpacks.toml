@@ -1,3 +1,6 @@
+[providers]
+python = "3.9"
+
 [phases.setup]
 nixPkgs = ["python39", "pip"]
 
@@ -12,3 +15,4 @@ cmd = "python manage.py"
 
 [variables]
 PYTHON_VERSION = "3.9"
+FLASK_APP = "manage.py"
