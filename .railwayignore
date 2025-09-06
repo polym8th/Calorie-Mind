@@ -43,3 +43,9 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignore Docker files (use nixpacks instead)
+Dockerfile*
+.dockerignore
+docker-compose.yml
+docker-compose.yaml

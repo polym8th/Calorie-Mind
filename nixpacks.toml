@@ -9,3 +9,6 @@ cmds = ["echo 'Build complete'"]
 
 [start]
 cmd = "python manage.py"
+
+[variables]
+PYTHON_VERSION = "3.9"
